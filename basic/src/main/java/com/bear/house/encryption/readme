@@ -1,0 +1,45 @@
+参考页面： https://blog.csdn.net/lei1160427600/article/details/52558826
+
+加密，是以某种特殊的算法改变原有的信息数据，是的未授权的用户即使获得了已加密的信息，但因不知道解密的方法，仍然无法了解信息的内容。
+大体上分为双向加密和单向加密
+    双向加密又分为对称加密和非对称加密
+    双向加密大体意思就是明文加密后形成密文，可以通过是算法还原明文
+
+    单向加密只是对信息进行了摘要计算，不能通过算法生成明文
+    单向加密从严格意思上说不能算是加密一种，应该算是摘要算法
+
+
+
+一：双向加密
+    1. 对称加密
+        采用单钥密码系统的加密方法，同一个密钥可以同时用作信息的加密和解密
+        由于其速度，对称性加密通常在消息发送方需要加密大量数据时使用
+
+        所谓对称，就是采用这种加密方法的双方使用方式用同样的密钥进行加密和解密。密钥是控制加密及解密过程的指令
+        算法是一组规则，规定如何进行加密和解密。英雌对称式加密本身是不安全的
+        常用的对称加密有：DES、IDEA、RC2、RC4、SKIPJACK、RC5、AES算法等
+
+        对称机密一般java类中定义成员
+            // KeyGenerator 提供对称密钥生成器功能，支持各种算法
+            private KeyGenerator keygen;
+            // SecretKey 负责保存对称密钥
+            private SecretKey deskey;
+            // Cipher 负责完成加密或解密的工作
+            private Cipher c;
+            // 该字节数组负责保存加密的结果
+            private byte[] cipherByte;
+
+        在构造函数中初始化
+            Security.addProvider(new com.sun.crypto.provider.SunJCE())
+            // 实例化支持DES算法的密钥生成器（算法名称命名需按规定，否则抛出异常）
+            keygen = KeyGenerator.getInstance("DES");
+            // 生成密钥
+            deskey = keygen.generateKey;
+            // 生成Cipher对象，指定其支持的DES算法
+            c = Cipher.getInstance("DES");
+    非对称加密
+        与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥
+
+二、单向加密
+    java一般需要获取对象MessageDigest来实现单向加密
+
