@@ -20,3 +20,7 @@ cwallet.sso.lck### Example user template template
 *.iml
 out
 gen
+
+# Java class files
+*.class
+
