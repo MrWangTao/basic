@@ -13,12 +13,20 @@
     <url>http://www.example.com</url>
 
     <dependencies>
-        <!-- guava -->
-        <dependency>
+        <!-- guava 包含一些collection等一些工具类 -->
+        <!--<dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>19.0</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <!-- 用于进行编码转化，加解密 -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
         </dependency>
+
 
     </dependencies>
 </project>

@@ -1,6 +1,8 @@
 package com.bear.house.encryption.oneway;
 
-import sun.security.provider.MD5;
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
+import sun.misc.BASE64Encoder;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -57,8 +59,28 @@ public class EncrypMD5 {
         return result;
     }
 
+    /**
+     * Base64结合MD5加密，结果24位
+     * @param str
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @throws Base64DecodingException
+     */
+    public String EncoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException, Base64DecodingException {
+        //确定计算方法
+        MessageDigest md5=MessageDigest.getInstance("MD5");
+        BASE64Encoder base64en = new BASE64Encoder();
+        //加密后的字符串
+        String newstr=base64en.encode(md5.digest(str.getBytes("utf-8")));
+        System.out.println("BASE64Encoder = " + newstr);
+        String encode = Base64.encode(md5.digest(str.getBytes("utf-8")));
+        System.out.println("Base64 = " + encode);
+        return newstr;
+    }
 
-    public static void main(String args[]) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+
+    public static void main(String args[]) throws NoSuchAlgorithmException, UnsupportedEncodingException, Base64DecodingException {
         String msg = "fucking";
         EncrypMD5 md5 = new EncrypMD5();
         byte[] resultBytes = md5.eccrypt(msg);
@@ -67,6 +89,7 @@ public class EncrypMD5 {
         System.out.println("密文是：" + new String(resultBytes));
         System.out.println("明文是：" + msg);
         System.out.println(EncrypMD5.getEncryption(msg).toUpperCase());
+        md5.EncoderByMd5("fucking U 熊 啊啊啊啊啊");
     }
 
 }
