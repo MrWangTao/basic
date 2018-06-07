@@ -13,6 +13,11 @@
     <url>http://www.example.com</url>
 
     <dependencies>
+        <!-- 简化bean类 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <!-- guava 包含一些collection等一些工具类 -->
         <!--<dependency>
             <groupId>com.google.guava</groupId>
