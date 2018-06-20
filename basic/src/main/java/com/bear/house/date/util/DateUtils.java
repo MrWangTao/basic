@@ -20,7 +20,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO dayDateTime() {
-        return getDateTimeDTO(LocalDateTime.now(), false, "day");
+        return getDateTimeDTO(LocalDateTime.now(), false, "day",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -32,7 +33,8 @@ public class DateUtils {
         if (Objects.isNull(dateTime)) {
             return null;
         }
-        return getDateTimeDTO(dateTime, true, "day");
+        return getDateTimeDTO(dateTime, true, "day",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT);
     }
 
     /**
@@ -42,7 +44,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO dayDateTime(long days) {
-        return getDateTimeDTO(LocalDateTime.now().minusDays(days), false, "day");
+        return getDateTimeDTO(LocalDateTime.now().minusDays(days), false, "day",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -50,7 +53,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO weekDateTime() {
-        return getDateTimeDTO(LocalDateTime.now(), false, "week");
+        return getDateTimeDTO(LocalDateTime.now(), false, "week",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -60,7 +64,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO weekDateTime(long weeks) {
-        return getDateTimeDTO(LocalDateTime.now().minusWeeks(weeks), false, "week");
+        return getDateTimeDTO(LocalDateTime.now().minusWeeks(weeks), false, "week",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -72,7 +77,8 @@ public class DateUtils {
         if (Objects.isNull(dateTime)) {
             return null;
         }
-        return getDateTimeDTO(dateTime, true, "week");
+        return getDateTimeDTO(dateTime, true, "week",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT);
     }
 
     /**
@@ -80,7 +86,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO monthDateTime() {
-        return getDateTimeDTO(LocalDateTime.now(), false, "month");
+        return getDateTimeDTO(LocalDateTime.now(), false, "month",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -90,7 +97,8 @@ public class DateUtils {
      * @return
      */
     public static DateTimeDTO monthDateTime(long months) {
-        return getDateTimeDTO(LocalDateTime.now().minusMonths(months), false, "month");
+        return getDateTimeDTO(LocalDateTime.now().minusMonths(months), false, "month",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.END_DATE_TIME_FORMAT);
     }
 
     /**
@@ -102,7 +110,8 @@ public class DateUtils {
         if (Objects.isNull(dateTime)) {
             return null;
         }
-        return getDateTimeDTO(dateTime, true, "month");
+        return getDateTimeDTO(dateTime, true, "month",
+                DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT, DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT);
     }
 
     /**
@@ -112,37 +121,37 @@ public class DateUtils {
      * @param type
      * @return
      */
-    private static DateTimeDTO getDateTimeDTO (LocalDateTime dateTime, boolean hasParam, String type) {
+    private static DateTimeDTO getDateTimeDTO (LocalDateTime dateTime, boolean hasParam, String type, String startDateTimeFormat, String endDateTimeFormat) {
         String startDateTime = "";
         String endDateTime = "";
         // 转换成LocalDate
         LocalDate localDate = dateTime.toLocalDate();
         switch (type.toLowerCase()) {
             case "day":
-                startDateTime = localDate.atStartOfDay().format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                startDateTime = localDate.atStartOfDay().format(DateTimeFormatter.ofPattern(startDateTimeFormat));
                 if (hasParam) {
-                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 } else {
-                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.END_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 }
                 break;
             case "week":
                 int minusDays = dateTime.getDayOfWeek().getValue();
-                startDateTime = localDate.minusDays(minusDays - 1).atStartOfDay().format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                startDateTime = localDate.minusDays(minusDays - 1).atStartOfDay().format(DateTimeFormatter.ofPattern(startDateTimeFormat));
                 if (hasParam) {
-                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 } else {
-                    endDateTime = dateTime.plusDays(7 - minusDays).format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.END_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.plusDays(7 - minusDays).format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 }
                 break;
             case "month":
                 int dayOfMonth = dateTime.getDayOfMonth();
                 int lengthOfMonth = localDate.lengthOfMonth();
-                startDateTime = localDate.minusDays(dayOfMonth - 1).atStartOfDay().format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                startDateTime = localDate.minusDays(dayOfMonth - 1).atStartOfDay().format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 if (hasParam) {
-                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.BASIC_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 } else {
-                    endDateTime = dateTime.plusDays(lengthOfMonth - dayOfMonth).format(DateTimeFormatter.ofPattern(DateTimeFormatConstants.END_DATE_TIME_FORMAT));
+                    endDateTime = dateTime.plusDays(lengthOfMonth - dayOfMonth).format(DateTimeFormatter.ofPattern(endDateTimeFormat));
                 }
                 break;
         }
@@ -161,11 +170,11 @@ public class DateUtils {
         DateTimeDTO month = monthDateTime();
         System.out.println("month ==> " + month);
 
-        DateTimeDTO dayByNum = dayDateTime(2);
+        DateTimeDTO dayByNum = dayDateTime(1);
         System.out.println("dayByNum ==> " + dayByNum);
-        DateTimeDTO weekByNum = weekDateTime(2);
+        DateTimeDTO weekByNum = weekDateTime(1);
         System.out.println("weekByNum ==> " + weekByNum);
-        DateTimeDTO monthByNum = monthDateTime(2);
+        DateTimeDTO monthByNum = monthDateTime(1);
         System.out.println("monthByNum ==> " + monthByNum);
 
         LocalDateTime now = LocalDateTime.now();
