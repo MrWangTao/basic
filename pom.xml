@@ -18,6 +18,7 @@
 
     <modules>
         <module>basic</module>
+        <module>redis</module>
     </modules>
 
 
